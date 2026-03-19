@@ -2,6 +2,8 @@
 
 <img src="logo.png" alt="Payload Hostage logo" width="320" />
 
+**Version:** 1.0
+
 Payload Hostage is a Chrome DevTools extension that lets you pause, inspect, and modify `POST` request payloads from a page before they are actually sent, and then view the corresponding responses — all from a dedicated DevTools panel.
 
 It works by temporarily intercepting `fetch` and XHR `POST` calls, surfacing the payload in a DevTools panel where you can edit it, and only resuming the request when you confirm.
@@ -26,7 +28,7 @@ To install the extension locally during development:
 
 1. Open **chrome://extensions** in Chrome.
 2. Enable **Developer mode** (top-right toggle).
-3. Click **"Load unpacked"**.
+3. Click **"Load unpacked" (select the folder with this README and `manifest.json`)**.
 4. Select this project folder (containing `manifest.json`, `logo.png`, etc.).
 
 ### How to use
