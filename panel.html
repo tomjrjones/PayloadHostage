@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Payload Hostage</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #111827;
+      --panel: #1f2937;
+      --panel-2: #374151;
+      --panel-3: #0b1220;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --danger: #f87171;
+      --ok: #34d399;
+      --border: #4b5563;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      background: var(--bg);
+      color: var(--text);
+      font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .header {
+      width: 15%;
+      min-width: 140px;
+      max-width: 180px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      box-sizing: border-box;
+      padding-right: 1rem;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    .card {
+      width: 85%;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      box-sizing: border-box;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .card.full {
+      width: 100%;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .url {
+      word-break: break-all;
+      color: var(--accent);
+    }
+
+    .label {
+      color: var(--muted);
+      min-width: 72px;
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .editor-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .editor-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .editor-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      resize: vertical;
+      box-sizing: border-box;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--panel-3);
+      color: var(--text);
+      font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+      tab-size: 2;
+    }
+
+    textarea[readonly] {
+      opacity: 0.95;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .status.ok {
+      color: var(--ok);
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: #08111f;
+      border-color: transparent;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 900px) {
+      .header,
+      .card {
+        width: 100%;
+        max-width: none;
+        padding-right: 0;
+      }
+
+      .editor-grid {
+        grid-template-columns: 1fr;
+      }
+
+      textarea {
+        min-height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div>
+        <div class="title">
+          <img src="./logo.png" alt="Payload Hostage" width="100%" height="auto">
+        </div>
+        <!-- <div class="subtitle">Intercept, inspect, modify, confirm.</div> -->
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <span class="badge" id="method">POST</span>
+        <span class="badge" id="bodyType">No payload</span>
+        <span class="badge" id="responseType">No response</span>
+        <button
+          id="toggleActive"
+          class="badge"
+          style="margin-left: auto; cursor: pointer;"
+        >
+          INTERCEPTOR: OFF – CLICK TO ENABLE
+        </button>
+      </div>
+
+      <div class="row">
+        <div class="label">URL</div>
+        <div class="url" id="meta">Waiting for intercepted request…</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card full">
+    <div class="editor-grid">
+      <div class="editor-pane">
+        <div class="editor-header">
+          <div class="editor-title">Payload 🔫</div>
+          <div class="editor-meta" id="requestMeta">Editable</div>
+        </div>
+
+        <textarea
+          id="payload"
+          spellcheck="false"
+          placeholder="Intercepted payload will appear here"
+        ></textarea>
+      </div>
+
+      <div class="editor-pane">
+        <div class="editor-header">
+          <div class="editor-title">Response</div>
+          <div class="editor-meta" id="responseMeta">Available after confirm</div>
+        </div>
+
+        <textarea
+          id="response"
+          spellcheck="false"
+          readonly
+          placeholder="Response will appear here after the request completes"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div id="status" class="status">Idle</div>
+      <div class="actions">
+        <button id="format">Format</button>
+        <button id="cancel">Cancel</button>
+        <button id="send" class="primary">Confirm &amp; Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="panel.js"></script>
+</body>
+</html>
